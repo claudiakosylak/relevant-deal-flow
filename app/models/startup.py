@@ -31,6 +31,5 @@ class Startup(db.Model):
             'founder_2': self.founder_2,
             'founder_3': self.founder_3,
             'user_id': self.user_id,
-            'created_at': self.created_at,
-            'user': self.user.to_dict()
+            'created_at': self.created_at
         }

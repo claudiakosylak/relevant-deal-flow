@@ -21,9 +21,10 @@ def user_startups():
     startups = Startup.query.filter(Startup.user_id == current_user.id).all()
     return {'startups': [startup.to_dict() for startup in startups]}
 
-# @startup_routes.route('', methods=["POST"])
-# @login_required
-# def create_startup():
-#     """
-#     Creates a new startup in the system
-#     """
+@startup_routes.route('/<int:id>')
+def startup(id):
+    """
+    Query for a specific startup by startup id in a dictionary
+    """
+    startup = Startup.query.get(id)
+    return startup.to_dict()

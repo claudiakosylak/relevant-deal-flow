@@ -7,6 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import MyStartups from "./components/MyStartups";
+import StartupIndex from "./components/StartupIndex";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,14 +24,17 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/my-startups">
+          <Route exact path="/my-startups">
             <MyStartups />
           </Route>
-          <Route path="/login" >
+          <Route exact path="/login" >
             <LoginFormPage />
           </Route>
-          <Route path="/signup">
+          <Route exact path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path="/:id">
+            <StartupIndex />
           </Route>
         </Switch>
       )}

@@ -41,7 +41,6 @@ function ProfileButton({ user }) {
   }, [showMenu]);
 
   const handleLogout = (e) => {
-    e.preventDefault();
     dispatch(logout());
   };
 
@@ -62,16 +61,19 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <li className={styles.name}>{user.username}</li>
-            <NavLink to="/" className={styles.my_startups}>Feed</NavLink>
-            <NavLink to="/my-startups" className={styles.my_startups}>My Startups</NavLink>
+            <NavLink to="/" className={styles.my_startups} onClick={closeMenu}>Feed</NavLink>
+            <NavLink to="/my-startups" className={styles.my_startups} onClick={closeMenu}>My Startups</NavLink>
             <li>
-              <button onClick={handleLogout} className={styles.logout}>Log Out</button>
+              <button onClick={() => {
+                handleLogout()
+                closeMenu()
+                }} className={styles.logout}>Log Out</button>
             </li>
           </>
         ) : (
           <>
-            <NavLink to="/login" className={styles.login}>Login</NavLink>
-            <NavLink to="/signup" className={styles.login}>Sign Up</NavLink>
+            <NavLink to="/login" className={styles.login} onClick={closeMenu}>Login</NavLink>
+            <NavLink to="/signup" className={styles.login} onClick={closeMenu}>Sign Up</NavLink>
           </>
         )}
       </ul>

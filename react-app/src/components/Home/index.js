@@ -7,6 +7,7 @@ import FeedItem from "../FeedItem";
 const Home = () => {
     const dispatch = useDispatch();
     const startups = useSelector(state => state.startup.allStartups);
+    const startupsArray = Object.values(startups);
 
 
     useEffect(() => {
@@ -19,7 +20,7 @@ const Home = () => {
                 Startup Feed
             </div>
             <div className={styles.feed}>
-                {startups?.map(startup => (
+                {startupsArray?.map(startup => (
                     <FeedItem key={startup.id} startup={startup} />
                 ))}
             </div>
