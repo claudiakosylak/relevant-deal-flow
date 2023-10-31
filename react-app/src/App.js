@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import MyStartups from "./components/MyStartups";
 import StartupIndex from "./components/StartupIndex";
+import UploadDeck from "./components/UploadDeck";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,9 @@ function App() {
           </Route>
           <Route exact path="/my-startups">
             <MyStartups />
+          </Route>
+          <Route exact path="/upload">
+            <UploadDeck />
           </Route>
           <Route exact path="/login" >
             <LoginFormPage />
