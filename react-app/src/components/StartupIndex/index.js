@@ -15,7 +15,29 @@ const StartupIndex = () => {
 
     return (
         <div className={styles.wrapper}>
-            <h2>{startup?.name}</h2>
+            <div className={styles.top}>
+                <img src={startup.deck} className={styles.image}></img>
+                <div className={styles.right}>
+                    <h2>{startup?.name}</h2>
+                    <p className={styles.website}>{startup?.website}</p>
+                    <div className={styles.founders}>
+                        <h3>Founders:</h3>
+                        <div className={styles.founder}>{startup?.founder_1}</div>
+                        {startup?.founder_2 && (
+                            <div className={styles.founder}>{startup?.founder_2}</div>
+                        )}
+                        {startup?.founder_3 && (
+                            <div className={styles.founder}>{startup?.founder_3}</div>
+                        )}
+                    </div>
+                </div>
+            </div>
+            <div className={styles.bottom}>
+                <h3>About</h3>
+                <p className={styles.about}>
+                    {startup?.description}
+                </p>
+            </div>
         </div>
     )
 }
