@@ -1,0 +1,66 @@
+@import ../../helpers
+
+.profile_dropdown
+    position: absolute
+    background-color: $dark
+    top: 100px
+    right: 0
+    width: 250px
+    padding: 30px
+    border-radius: 0 0 0 32px
+    display: flex
+    flex-direction: column
+    & > li
+        list-style-type: none
+        text-decoration: none
+        color: white
+    +s
+        width: 100%
+        border-radius: 0
+        align-items: center
+        gap: 20px
+
+.my_startups
+    color: white
+    text-decoration: none
+    cursor: pointer
+    +s
+        font-size: 30px
+
+
+.hidden
+    display: none
+
+.icon
+    background: none
+    border: none
+    & > i
+        color: $light
+        font-size: 40px
+.logout
+    background: none
+    border: none
+    color: $light
+    font-weight: 700
+    font-size: 18px
+    margin-top: 20px
+    +s
+        font-size: 35px
+
+.name
+    font-size: 25px
+    margin-bottom: 20px
+    +s
+        font-size: 35px
+
+.login
+    text-decoration: none
+    color: white
+
+.close
+    position: absolute
+    cursor: pointer
+    right: 20px
+    top: 20px
+    & > i
+        font-size: 35px

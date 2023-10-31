@@ -1,16 +1,15 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import './Navigation.css';
+import styles from "./Navigation.module.sass";
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 
 	return (
-		<ul>
+		<ul className={styles.wrapper}>
 			<li>
-				<NavLink exact to="/">Home</NavLink>
+				<h1 className={styles.logo}>Relevant Deal Flow</h1>
 			</li>
 			{isLoaded && (
 				<li>
