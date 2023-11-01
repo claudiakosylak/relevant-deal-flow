@@ -22,7 +22,7 @@ const UploadDeck = () => {
         const newErrors = {};
         if (name === "" || name.length < 3 || name.length > 40) newErrors.name = "Startup name must be between 3 and 40 characters long.";
         if (description === "" || description.length < 30 || description.length > 500) newErrors.description = "Please describe your startup in between 30 and 500 characters.";
-        if (website && (website.length < 5 || name.length > 255)) newErrors.website = "Website must be between 5 and 255 characters.";
+        if (website !== "" && (website.length < 5 || name.length > 255)) newErrors.website = "Website must be between 5 and 255 characters.";
         if (deck === "") newErrors.deck = "Please upload your deck in .pdf format.";
         if (founder1 === "" && founder2 === "" && founder3 === "") newErrors.founders = "Please enter at least one founder name.";
         if (founder1.length < 5 || founder1.length > 100) newErrors.founder1 = "Name must be between 5 and 100 characters.";
@@ -87,8 +87,8 @@ const UploadDeck = () => {
                     )}
                 </label>
                 <label>
-                    Upload your deck in .pdf format.
-                    <input type="text" value={deck} onChange={(e) => setDeck(e.target.value)} className={styles.inputs}></input>
+                    Upload your deck in .pdf, .ppt or .pptx format.
+                    <input type="file" onChange={(e) => setDeck(e.target.files[0])} className={styles.inputs} required></input>
                     {(hasSubmitted && errors.deck) && (
                         <p className={styles.errors}>{errors.deck}</p>
                     )}

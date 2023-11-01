@@ -46,6 +46,8 @@ def upload_deck():
         file.filename = get_unique_filename(file.filename)
         upload = upload_file_to_s3(file)
 
+        print("🍎 upload: ", upload)
+
         if "url" not in upload:
             return {"errors": "file error"}
 
@@ -53,7 +55,7 @@ def upload_deck():
             name=form.data['name'],
             description=form.data['description'],
             website=form.data['website'],
-            deck=form.data['deck'],
+            deck=upload["url"],
             founder_1=form.data['founder_1'],
             founder_2=form.data['founder_2'],
             founder_3=form.data['founder_3'],
