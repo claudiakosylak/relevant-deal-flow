@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import styles from "./StartupIndex.module.sass";
 import { useDispatch, useSelector } from "react-redux";
 import { getStartupThunk } from "../../store/startup";
+import copy from "copy-to-clipboard";
 
 const StartupIndex = () => {
     const dispatch = useDispatch();
@@ -12,6 +13,11 @@ const StartupIndex = () => {
     useEffect(() => {
         dispatch(getStartupThunk(id));
     }, [dispatch])
+
+    const copyToClipboard = () => {
+        copy(window.location.href);
+        alert("Copied to clipboard!")
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -31,6 +37,7 @@ const StartupIndex = () => {
                         )}
                     </div>
                     <a href={startup.deck} download={`${startup.name}_deck`}>Download Deck</a>
+                    <button onClick={copyToClipboard} className={styles.copy}>Copy Link</button>
                 </div>
             </div>
             <div className={styles.bottom}>
