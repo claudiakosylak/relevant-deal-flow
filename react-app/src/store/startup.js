@@ -37,6 +37,25 @@ export const getStartupThunk = id => async dispatch => {
     }
 }
 
+export const createStartupThunk = startup => async dispatch => {
+    const response = await fetch("/api/startups", {
+        method: "POST",
+        body: startup
+    });
+    if (response.ok) {
+        const data = response.json();
+        dispatch(getStartup(data))
+        return data;
+	} else if (response.status < 500) {
+		const data = await response.json();
+		if (data.errors) {
+			return data;
+		}
+	} else {
+		return ["An error occurred. Please try again."];
+	}
+}
+
 const initialState = { allStartups: {}, myStartups: {}, currentStartup: {}};
 
 export default function reducer(state = initialState, action) {
