@@ -30,6 +30,7 @@ const StartupIndex = () => {
                             <div className={styles.founder}>{startup?.founder_3}</div>
                         )}
                     </div>
+                    <a href={startup.deck} download={`${startup.name}_deck`}>Download Deck</a>
                 </div>
             </div>
             <div className={styles.bottom}>
