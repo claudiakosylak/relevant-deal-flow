@@ -2,6 +2,8 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Startup
 from app.forms import UploadDeckForm
+from app.api.AWS_helpers import (
+    upload_file_to_s3, get_unique_filename)
 
 startup_routes = Blueprint('startups', __name__)
 
@@ -40,6 +42,13 @@ def upload_deck():
     form = UploadDeckForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        file = form.data["deck"]
+        file.filename = get_unique_filename(file.filename)
+        upload = upload_file_to_s3(file)
+
+        if "url" not in upload:
+            return {"errors": "file error"}
+
         startup = Startup(
             name=form.data['name'],
             description=form.data['description'],
