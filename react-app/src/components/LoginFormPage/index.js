@@ -2,16 +2,22 @@ import React, { useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import './LoginForm.css';
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import styles from "./LoginFormPage.module.sass";
 
 function LoginFormPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser && !history.location.state) {
+    return <Redirect to="/" />;
+  } else if (sessionUser && history.location.state.from === "upload") {
+    return <Redirect to="/upload"/>
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,6 +56,14 @@ function LoginFormPage() {
         </label>
         <button type="submit">Log In</button>
       </form>
+      <p className={styles.signup} onClick={() => {
+        if (history.location.state) {
+          history.push("/signup", {from: history.location.state.from})
+        } else {
+          history.push("/signup");
+        }
+      }
+        }>Already have an account?</p>
     </>
   );
 }

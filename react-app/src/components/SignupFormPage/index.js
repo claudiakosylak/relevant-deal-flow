@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/session";
-import './SignupForm.css';
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import styles from "./SignupFormPage.module.sass";
 
 function SignupFormPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -13,7 +15,13 @@ function SignupFormPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser && !history.location.state) {
+    return <Redirect to="/" />;
+  } else if (sessionUser && history.location.state.from === "upload") {
+    return <Redirect to="/upload"/>
+  }
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,6 +80,14 @@ function SignupFormPage() {
         </label>
         <button type="submit">Sign Up</button>
       </form>
+      <p className={styles.login} onClick={() => {
+        if (history.location.state) {
+          history.push("/login", {from: history.location.state.from})
+        } else {
+          history.push("/login");
+        }
+      }
+        }>Already have an account?</p>
     </>
   );
 }

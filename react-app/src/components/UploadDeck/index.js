@@ -3,8 +3,9 @@ import styles from "./UploadDeck.module.sass";
 import { useDispatch } from "react-redux";
 import { createStartupThunk } from "../../store/startup";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect } from "react-router-dom";
 
-const UploadDeck = () => {
+const UploadDeck = ({ user }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const [name, setName] = useState("");
@@ -31,10 +32,11 @@ const UploadDeck = () => {
         setErrors(newErrors);
     }, [name, description, website, deck, founder1, founder2, founder3])
 
+    if (!user) return <Redirect to="/" />;
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (Object.keys(errors).length === 0) {
-            console.log("ERRORS")
             setHasSubmitted(false);
             const formData = new FormData();
             formData.append('name', name)
