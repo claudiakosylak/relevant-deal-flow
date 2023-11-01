@@ -11,31 +11,27 @@ function LoginFormPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
 
   if (sessionUser && !history.location.state) {
     return <Redirect to="/" />;
   } else if (sessionUser && history.location.state.from === "upload") {
-    return <Redirect to="/upload"/>
+    return <Redirect to="/upload" />
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
+    console.log("DATA: ", data)
     if (data) {
       setErrors(data);
     }
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
+    <div className={styles.wrapper}>
+      <h2>Log In</h2>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <label>
           Email
           <input
@@ -43,7 +39,11 @@ function LoginFormPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className={styles.inputs}
           />
+          {errors.email && (
+            <p className={styles.errors}>{errors.email[0]}</p>
+          )}
         </label>
         <label>
           Password
@@ -52,19 +52,23 @@ function LoginFormPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className={styles.inputs}
           />
+          {errors.password && (
+            <p className={styles.errors}>{errors.password[0]}</p>
+          )}
         </label>
         <button type="submit">Log In</button>
-      </form>
-      <p className={styles.signup} onClick={() => {
-        if (history.location.state) {
-          history.push("/signup", {from: history.location.state.from})
-        } else {
-          history.push("/signup");
+        <p className={styles.signup} onClick={() => {
+          if (history.location.state) {
+            history.push("/signup", { from: history.location.state.from })
+          } else {
+            history.push("/signup");
+          }
         }
-      }
         }>Already have an account?</p>
-    </>
+      </form>
+    </div>
   );
 }
 

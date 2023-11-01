@@ -50,7 +50,11 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={openMenu} className={styles.icon}>
-        <i className="fas fa-user-circle" />
+        {user ? (
+          <i className="fas fa-user-circle" />
+        ) : (
+          <i className="fa-solid fa-bars"></i>
+        )}
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {isMobile && (
