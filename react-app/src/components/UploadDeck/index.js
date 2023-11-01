@@ -88,7 +88,7 @@ const UploadDeck = () => {
                 </label>
                 <label>
                     Upload your deck in .pdf, .ppt or .pptx format.
-                    <input type="file" onChange={(e) => setDeck(e.target.files[0])} className={styles.inputs} required></input>
+                    <input type="file" onChange={(e) => setDeck(e.target.files[0])} className={styles.inputs} required accept=".pdf,.ppt,.pptx"></input>
                     {(hasSubmitted && errors.deck) && (
                         <p className={styles.errors}>{errors.deck}</p>
                     )}
