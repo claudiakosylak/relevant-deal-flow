@@ -12,7 +12,7 @@ const StartupIndex = () => {
 
     useEffect(() => {
         dispatch(getStartupThunk(id));
-    }, [dispatch])
+    }, [dispatch, id])
 
     const copyToClipboard = () => {
         copy(window.location.href);

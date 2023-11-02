@@ -11,7 +11,7 @@ function LoginFormPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState("");
 
   if (sessionUser && !history.location.state) {
     return <Redirect to="/" />;
@@ -22,9 +22,13 @@ function LoginFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
-    console.log("DATA: ", data)
     if (data) {
-      setErrors(data);
+      if (data.email) {
+        setErrors(data.email[0])
+      }
+      if (data.password) {
+        setErrors(data.password[0])
+      }
     }
   };
 
@@ -32,6 +36,10 @@ function LoginFormPage() {
     <div className={styles.wrapper}>
       <h2>Log In</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
+      {errors && (
+            <p className={styles.errors}>{errors}</p>
+          )}
+
         <label>
           Email
           <input
@@ -41,9 +49,6 @@ function LoginFormPage() {
             required
             className={styles.inputs}
           />
-          {errors.email && (
-            <p className={styles.errors}>{errors.email[0]}</p>
-          )}
         </label>
         <label>
           Password
@@ -54,9 +59,7 @@ function LoginFormPage() {
             required
             className={styles.inputs}
           />
-          {errors.password && (
-            <p className={styles.errors}>{errors.password[0]}</p>
-          )}
+
         </label>
         <button type="submit">Log In</button>
         <p className={styles.signup} onClick={() => {
@@ -66,7 +69,7 @@ function LoginFormPage() {
             history.push("/signup");
           }
         }
-        }>Already have an account?</p>
+        }>Don't have an account yet?</p>
       </form>
     </div>
   );

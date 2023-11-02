@@ -8,17 +8,22 @@
     padding: 100px
     background-color: $light
     min-height: 100vH
+    +a
+        padding: 15px
     & > h2
         font-size: 50px
 
 .form
     background-color: white
+    margin-top: 50px
     display: flex
     flex-direction: column
     gap: 20px
     padding: 30px
     border-radius: 32px
     width: 500px
+    +a
+        width: 100%
     & > label
         display: flex
         flex-direction: column
@@ -32,8 +37,10 @@
         font-size: 25px
         width: 200px
         align-self: center
+        margin-top: 20px
         &:hover
             background-color: $dark
+
 
 .inputs
     border-radius: 15px
@@ -45,6 +52,8 @@
 
 .errors
     color: red
+    align-self: center
 
 .signup
     cursor: pointer
+    margin-top: 50px
