@@ -22,7 +22,7 @@ const StartupIndex = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.top}>
-                <img src={startup.deck} className={styles.image}></img>
+                <img src={startup.picture} className={styles.image} alt={`${startup.name} image`}></img>
                 <div className={styles.right}>
                     <h2>{startup?.name}</h2>
                     <p className={styles.website}>{startup?.website}</p>

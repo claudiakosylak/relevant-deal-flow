@@ -35,6 +35,7 @@ def upgrade():
     sa.Column('name', sa.String(length=40), nullable=False),
     sa.Column('description', sa.String(length=500), nullable=False),
     sa.Column('website', sa.String(length=255)),
+    sa.Column('picture', sa.String(length=255)),
     sa.Column('deck', sa.String(length=200)),
     sa.Column('founder_1', sa.String(length=100), nullable=False),
     sa.Column('founder_2', sa.String(length=100)),

@@ -11,6 +11,7 @@ const UploadDeck = ({ user }) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [website, setWebsite] = useState("");
+    const [picture, setPicture] = useState("");
     const [deck, setDeck] = useState("");
     const [founder1, setFounder1] = useState("");
     const [founder2, setFounder2] = useState("");
@@ -42,6 +43,7 @@ const UploadDeck = ({ user }) => {
             formData.append('name', name)
             formData.append('description', description)
             formData.append('website', website)
+            formData.append('picture', picture)
             formData.append('deck', deck)
             formData.append('founder_1', founder1)
             formData.append('founder_2', founder2)
@@ -85,6 +87,13 @@ const UploadDeck = ({ user }) => {
                     )}
                     {backendErrors.website && (
                         <p className={styles.errors}>{backendErrors.website}</p>
+                    )}
+                </label>
+                <label>
+                    Upload an image for your startup.
+                    <input type="file" onChange={(e) => setPicture(e.target.files[0])} className={styles.inputs} required accept=".jpg,.png,.jpeg,.gif,.svg,.tiff"></input>
+                    {(hasSubmitted && errors.picture) && (
+                        <p className={styles.errors}>{errors.picture}</p>
                     )}
                 </label>
                 <label>

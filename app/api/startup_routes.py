@@ -46,15 +46,18 @@ def upload_deck():
         file.filename = get_unique_filename(file.filename)
         upload = upload_file_to_s3(file)
 
-        print("🍎 upload: ", upload)
+        image = form.data["picture"]
+        image.filename = get_unique_filename(image.filename)
+        upload_image = upload_file_to_s3(image)
 
-        if "url" not in upload:
+        if ("url" not in upload) or ("url" not in upload_image):
             return {"errors": "file error"}
 
         startup = Startup(
             name=form.data['name'],
             description=form.data['description'],
             website=form.data['website'],
+            picture=upload_image["url"],
             deck=upload["url"],
             founder_1=form.data['founder_1'],
             founder_2=form.data['founder_2'],

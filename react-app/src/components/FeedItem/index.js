@@ -6,7 +6,7 @@ const FeedItem = ({ startup }) => {
     const history = useHistory();
     return (
         <div className={styles.wrapper}>
-            <img src={startup.deck} className={styles.deck}
+            <img src={startup.picture} className={styles.deck}
             alt={`${startup.name} picture`}
             onError={e => { e.currentTarget.src = "https://images.unsplash.com/photo-1590098563686-06ab8778a6a7?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }}
             ></img>

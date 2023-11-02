@@ -11,6 +11,7 @@ class Startup(db.Model):
     name = db.Column(db.String(40), nullable=False)
     description = db.Column(db.String(500), nullable=False)
     website = db.Column(db.String(255), unique=True)
+    picture = db.Column(db.String(255))
     deck = db.Column(db.String(200))
     founder_1 = db.Column(db.String(100), nullable=False)
     founder_2 = db.Column(db.String(100))
@@ -26,6 +27,7 @@ class Startup(db.Model):
             'name': self.name,
             'description': self.description,
             'website': self.website,
+            'picture': self.picture,
             'deck': self.deck,
             'founder_1': self.founder_1,
             'founder_2': self.founder_2,
