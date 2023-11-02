@@ -3,9 +3,11 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import { NavLink } from 'react-router-dom';
 import styles from "./ProfileButton.module.sass";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 474 ? true : false)
   const ulRef = useRef();
@@ -14,6 +16,7 @@ function ProfileButton({ user }) {
     if (showMenu) return;
     setShowMenu(true);
   };
+
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -45,6 +48,7 @@ function ProfileButton({ user }) {
   };
 
   const ulClassName = showMenu ? styles.profile_dropdown : styles.hidden
+  const darkBackground = showMenu ? styles.dark : styles.hidden
   const closeMenu = () => setShowMenu(false);
 
   return (
@@ -56,6 +60,7 @@ function ProfileButton({ user }) {
           <i className="fa-solid fa-bars"></i>
         )}
       </button>
+        <div className={darkBackground} onClick={closeMenu}></div>
       <ul className={ulClassName} ref={ulRef}>
         {isMobile && (
           <div className={styles.close}>
@@ -64,18 +69,25 @@ function ProfileButton({ user }) {
         )}
         {user ? (
           <>
-            <li className={styles.name}>{user.username}</li>
             <NavLink to="/" className={styles.my_startups} onClick={closeMenu}>Feed</NavLink>
+            <NavLink to="/upload" className={styles.my_startups} onClick={closeMenu}>Upload a Deck</NavLink>
             <NavLink to="/my-startups" className={styles.my_startups} onClick={closeMenu}>My Startups</NavLink>
+            <li className={styles.name}>Logged in as <br></br>{user.email}</li>
             <li>
               <button onClick={() => {
                 handleLogout()
                 closeMenu()
-                }} className={styles.logout}>Log Out</button>
+              }} className={styles.logout}>Log Out</button>
             </li>
           </>
         ) : (
           <>
+            <NavLink to="/" className={styles.my_startups} onClick={closeMenu}>Feed</NavLink>
+            <li className={styles.my_startups} onClick={() => {
+              history.push("/signup", {from: "upload"})
+              closeMenu();
+            }}
+            >Upload a Deck</li>
             <NavLink to="/login" className={styles.login} onClick={closeMenu}>Login</NavLink>
             <NavLink to="/signup" className={styles.login} onClick={closeMenu}>Sign Up</NavLink>
           </>

@@ -16,7 +16,7 @@
     align-items: center
     width: 100%
     gap: 40px
-    margin-top: 100px
+    margin-top: 70px
     +m
         gap: 20px
 
@@ -26,15 +26,22 @@
     align-items: center
     justify-content: center
     gap: 30px
-    margin-top: 100px
+    margin-top: 70px
     background-color: $blue
     color: white
     padding: 20px
     border-radius: 32px
     cursor: pointer
+    +s
+        width: 100%
     & > p
         font-size: 40px
+        +s
+            font-size: 30px
     & > i
         font-size: 50px
     &:hover
         background-color: $dark
+
+.intro
+    font-size: 50px
