@@ -8,8 +8,12 @@
     padding: 100px
     background-color: $light
     min-height: 100vH
+    +m
+        padding: 15px
     & > h2
         font-size: 50px
+        +s
+            font-size: 40px
 
 .form
     background-color: white
@@ -18,6 +22,8 @@
     gap: 20px
     padding: 30px
     border-radius: 32px
+    margin-top: 50px
+    max-width: 100%
     & > label
         display: flex
         flex-direction: column
@@ -31,12 +37,16 @@
         font-size: 25px
         width: 200px
         align-self: center
+        +s
+            width: 100%
 
 
 .inputs
     border-radius: 15px
     border: 1px solid $dark
     padding: 15px
+    &:focus
+        outline: 1px solid $dark
 
 .founders
     display: flex

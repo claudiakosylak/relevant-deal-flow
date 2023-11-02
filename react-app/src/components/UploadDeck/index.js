@@ -48,7 +48,6 @@ const UploadDeck = ({ user }) => {
             formData.append('founder_3', founder3)
             dispatch(createStartupThunk(formData)).then(response => {
                 if (response.errors) {
-                    console.log(response)
                     setBackendErrors(response.errors)
                 } else {
                     history.push(`/${response.id}`)
