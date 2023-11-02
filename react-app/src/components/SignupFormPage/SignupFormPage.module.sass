@@ -1,0 +1,58 @@
+@import ../../helpers
+
+.wrapper
+    display: flex
+    flex-direction: column
+    align-items: center
+    width: 100%
+    padding: 100px
+    background-color: $light
+    min-height: 100vH
+    +a
+        padding: 15px
+    & > h2
+        font-size: 50px
+
+.form
+    background-color: white
+    margin-top: 50px
+    display: flex
+    flex-direction: column
+    gap: 20px
+    padding: 30px
+    border-radius: 32px
+    width: 500px
+    +a
+        width: 100%
+    & > label
+        display: flex
+        flex-direction: column
+    & > button
+        padding: 15px
+        background-color: $blue
+        border: none
+        border-radius: 15px
+        color: white
+        font-weight: 700
+        font-size: 25px
+        width: 200px
+        align-self: center
+        margin-top: 20px
+        &:hover
+            background-color: $dark
+
+.inputs
+    border-radius: 15px
+    border: 1px solid $dark
+    padding: 15px
+    height: 50px
+    &:focus
+        outline: 1px solid $blue
+
+.errors
+    color: red
+    align-self: center
+
+.login
+    cursor: pointer
+    margin-top: 50px

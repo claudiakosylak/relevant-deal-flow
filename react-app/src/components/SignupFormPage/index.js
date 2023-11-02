@@ -10,15 +10,14 @@ function SignupFormPage() {
   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
 
   if (sessionUser && !history.location.state) {
     return <Redirect to="/" />;
   } else if (sessionUser && history.location.state.from === "upload") {
-    return <Redirect to="/upload"/>
+    return <Redirect to="/upload" />
   }
 
 
@@ -26,22 +25,19 @@ function SignupFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-        const data = await dispatch(signUp(username, email, password));
-        if (data) {
-          setErrors(data)
-        }
+      const data = await dispatch(signUp(email, password));
+      if (data) {
+        setErrors(data)
+      }
     } else {
-        setErrors(['Confirm Password field must be the same as the Password field']);
+      setErrors({ match: "Passwords do not match." });
     }
   };
 
   return (
-    <>
+    <div className={styles.wrapper}>
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <label>
           Email
           <input
@@ -49,16 +45,11 @@ function SignupFormPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className={styles.inputs}
           />
-        </label>
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+          {errors.email && (
+            <p className={styles.errors}>{errors.email[0]}</p>
+          )}
         </label>
         <label>
           Password
@@ -67,6 +58,7 @@ function SignupFormPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className={styles.inputs}
           />
         </label>
         <label>
@@ -76,19 +68,28 @@ function SignupFormPage() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            className={styles.inputs}
           />
+          {errors.match && (
+            <p className={styles.errors}>{errors.match}</p>
+          )}
+          {errors.password && (
+            errors.password.map((error, index) => (
+              <p className={styles.errors} key={index}>{error}</p>
+            ))
+          )}
         </label>
         <button type="submit">Sign Up</button>
-      </form>
-      <p className={styles.login} onClick={() => {
-        if (history.location.state) {
-          history.push("/login", {from: history.location.state.from})
-        } else {
-          history.push("/login");
+        <p className={styles.login} onClick={() => {
+          if (history.location.state) {
+            history.push("/login", { from: history.location.state.from })
+          } else {
+            history.push("/login");
+          }
         }
-      }
         }>Already have an account?</p>
-    </>
+      </form>
+    </div>
   );
 }
 
