@@ -1,14 +1,17 @@
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import React, { useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import React, { useEffect, useState } from "react";
 import styles from "./StartupIndex.module.sass";
 import { useDispatch, useSelector } from "react-redux";
-import { getStartupThunk } from "../../store/startup";
+import { deleteStartupThunk, getStartupThunk } from "../../store/startup";
 import copy from "copy-to-clipboard";
+import { CircleSpinner } from "react-spinners-kit";
 
-const StartupIndex = () => {
+const StartupIndex = ({ user }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { id } = useParams();
     const startup = useSelector(state => state.startup.currentStartup);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         dispatch(getStartupThunk(id));
@@ -19,6 +22,11 @@ const StartupIndex = () => {
         alert("Copied to clipboard!")
     }
 
+    const handleDelete = () => {
+        setLoading(true);
+        dispatch(deleteStartupThunk(id)).then(() => history.push("/my-startups"));
+    }
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.top}>
@@ -27,8 +35,8 @@ const StartupIndex = () => {
                     }></img>
                 <div className={styles.right}>
                     <div className={styles.right_top}>
-                    <h2>{startup?.name}</h2>
-                    <p className={styles.website}>{startup?.website}</p>
+                        <h2>{startup?.name}</h2>
+                        <p className={styles.website}>{startup?.website}</p>
                     </div>
                     <div className={styles.founders}>
                         <h3>Founders:</h3>
@@ -50,6 +58,14 @@ const StartupIndex = () => {
                     {startup?.description}
                 </p>
             </div>
+            {(user && user.id === startup.user_id) && (
+                <div className={styles.delete}>
+                    {loading && (
+                        <CircleSpinner size={20} color="#0000FF" loading={loading} className={styles.spinner} />
+                    )}
+                    <button onClick={handleDelete}>Delete Startup</button>
+                </div>
+            )}
         </div>
     )
 }

@@ -1,6 +1,7 @@
 const GET_STARTUPS = "startup/GET_STARTUPS";
 const GET_STARTUP = "startup/GET_STARTUP";
 const GET_USER_STARTUPS = "startup/GET_USER_STARTUPS";
+const DELETE_STARTUP = "startup/DELETE_STARTUP";
 
 const getStartups = startups => ({
     type: GET_STARTUPS,
@@ -15,6 +16,11 @@ const getStartup = startup => ({
 const getUserStartups = startups => ({
     type: GET_USER_STARTUPS,
     startups
+})
+
+const deleteStartup = startupId => ({
+    type: DELETE_STARTUP,
+    startupId
 })
 
 export const getUserStartupsThunk = () => async dispatch => {
@@ -53,6 +59,17 @@ export const getStartupThunk = id => async dispatch => {
         dispatch(getStartup(data));
     } else {
         return ["An error occurred. Please try again."];
+    }
+}
+
+export const deleteStartupThunk = id => async dispatch => {
+    const response = await fetch(`/api/startups/${id}`, {method: "DELETE"})
+    const data = response.json();
+    if (response.ok) {
+        dispatch(deleteStartup(id));
+        return data;
+    } else {
+        return data;
     }
 }
 
@@ -95,6 +112,11 @@ export default function reducer(state = initialState, action) {
                 newerState.myStartups[startup.id] = startup;
             }
             return newerState;
+        case DELETE_STARTUP:
+            const deleteState = {...state, allStartups: {...state.allStartups}, myStartups: {...state.myStartups}, currentStartup: {}};
+            delete deleteState.allStartups[action.startupId];
+            delete deleteState.myStartups[action.startupId];
+            return deleteState;
         default:
             return state;
     }

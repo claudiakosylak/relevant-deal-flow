@@ -13,23 +13,27 @@ const Home = ({ startups }) => {
     const user = useSelector(state => state.session.user);
     const location = useLocation();
 
-    console.log("LOCATION: ", location)
-
-    if (!user && location.pathname==="/my-startups") return <Redirect to="/"></Redirect>
+    if (!user && location.pathname === "/my-startups") return <Redirect to="/"></Redirect>
 
     const uploadClick = () => {
         if (user) {
             history.push("/upload");
         } else {
-            history.push("/signup", {from: "upload"});
+            history.push("/signup", { from: "upload" });
         }
     }
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.intro}>
-                Startup Feed
-            </div>
+            {location.pathname === "/my-startups" ? (
+                <div className={styles.intro}>
+                    My Startups
+                </div>
+            ) : (
+                <div className={styles.intro}>
+                    Startup Feed
+                </div>
+            )}
             <div className={styles.upload} onClick={uploadClick}>
                 <i class="fa-solid fa-circle-arrow-up"></i>
                 <p>Upload Deck</p>

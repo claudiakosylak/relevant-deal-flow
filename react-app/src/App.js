@@ -52,7 +52,7 @@ function App() {
             <SignupFormPage />
           </Route>
           <Route path="/:id">
-            <StartupIndex />
+            <StartupIndex user={user}/>
           </Route>
         </Switch>
       )}

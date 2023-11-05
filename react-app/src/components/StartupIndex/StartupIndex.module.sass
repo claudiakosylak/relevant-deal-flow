@@ -33,6 +33,7 @@
     width: 50%
     height: 300px
     min-height: 100%
+    z-index: 0
     +w
         width: 33%
         min-height: 100%
@@ -154,3 +155,23 @@
     & > h3
         font-size: 30px
         margin-bottom: 20px
+
+.delete
+    display: flex
+    flex-direction: column
+    justify-content: center
+    gap: 20px
+    align-items: center
+    position: relative
+    & > button
+        padding: 15px
+        background-color: red
+        border-radius: 15px
+        color: white
+        font-weight: 700
+        font-size: 30px
+        border: 2px solid red
+        &:hover
+            background-color: white
+            color: red
+
