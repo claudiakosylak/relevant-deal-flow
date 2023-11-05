@@ -11,6 +11,7 @@ const UploadDeck = ({ user }) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [website, setWebsite] = useState("");
+    const [email, setEmail] = useState("");
     const [picture, setPicture] = useState("");
     const [deck, setDeck] = useState("");
     const [founder1, setFounder1] = useState("");
@@ -24,7 +25,8 @@ const UploadDeck = ({ user }) => {
         const newErrors = {};
         if (name === "" || name.length < 3 || name.length > 40) newErrors.name = "Startup name must be between 3 and 40 characters long.";
         if (description === "" || description.length < 30 || description.length > 500) newErrors.description = "Please describe your startup in between 30 and 500 characters.";
-        if (website !== "" && (website.length < 5 || name.length > 255)) newErrors.website = "Website must be between 5 and 255 characters.";
+        if (website !== "" && (website.length < 5 || website.length > 255)) newErrors.website = "Website must be between 5 and 255 characters.";
+        if (email !== "" && (email.length < 5 || email.length > 255)) newErrors.email = "Email must be between 5 and 255 characters.";
         if (deck === "") newErrors.deck = "Please upload your deck in .pdf format.";
         if (founder1 === "" && founder2 === "" && founder3 === "") newErrors.founders = "Please enter at least one founder name.";
         if (founder1.length < 5 || founder1.length > 100) newErrors.founder1 = "Name must be between 5 and 100 characters.";
@@ -43,6 +45,7 @@ const UploadDeck = ({ user }) => {
             formData.append('name', name)
             formData.append('description', description)
             formData.append('website', website)
+            formData.append('email', email)
             formData.append('picture', picture)
             formData.append('deck', deck)
             formData.append('founder_1', founder1)
@@ -87,6 +90,16 @@ const UploadDeck = ({ user }) => {
                     )}
                     {backendErrors.website && (
                         <p className={styles.errors}>{backendErrors.website}</p>
+                    )}
+                </label>
+                <label>
+                    Please enter your company's contact email address.
+                    <input type="text" className={styles.inputs} value={email} onChange={(e) => setEmail(e.target.value)}></input>
+                    {(hasSubmitted && errors.email) && (
+                        <p className={styles.errors}>{errors.email}</p>
+                    )}
+                    {backendErrors.email && (
+                        <p className={styles.errors}>{backendErrors.email}</p>
                     )}
                 </label>
                 <label>

@@ -57,6 +57,7 @@ def upload_deck():
             name=form.data['name'],
             description=form.data['description'],
             website=form.data['website'],
+            email=form.data['email'],
             picture=upload_image["url"],
             deck=upload["url"],
             founder_1=form.data['founder_1'],
@@ -67,4 +68,5 @@ def upload_deck():
         db.session.add(startup)
         db.session.commit()
         return startup.to_dict()
+    print("🍎 form errors: ", form.errors)
     return {'errors': form.errors}, 401
