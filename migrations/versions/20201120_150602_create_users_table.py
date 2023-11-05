@@ -35,6 +35,7 @@ def upgrade():
     sa.Column('name', sa.String(length=40), nullable=False),
     sa.Column('description', sa.String(length=500), nullable=False),
     sa.Column('website', sa.String(length=255)),
+    sa.Column('email', sa.String(length=255)),
     sa.Column('picture', sa.String(length=255)),
     sa.Column('deck', sa.String(length=200)),
     sa.Column('founder_1', sa.String(length=100), nullable=False),
@@ -44,7 +45,8 @@ def upgrade():
     sa.Column('created_at', sa.DateTime()),
     sa.ForeignKeyConstraint(['user_id'], ['users.id']),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('website')
+    sa.UniqueConstraint('website'),
+    sa.UniqueConstraint('email')
     )
 
     if environment == "production":
