@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { createStartupThunk } from "../../store/startup";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Redirect } from "react-router-dom";
+import { CircleSpinner } from "react-spinners-kit";
 
 const UploadDeck = ({ user }) => {
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const UploadDeck = ({ user }) => {
     const [errors, setErrors] = useState({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
     const [backendErrors, setBackendErrors] = useState({});
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const newErrors = {};
@@ -40,6 +42,7 @@ const UploadDeck = ({ user }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (Object.keys(errors).length === 0) {
+            setLoading(true);
             setHasSubmitted(false);
             const formData = new FormData();
             formData.append('name', name)
@@ -134,7 +137,12 @@ const UploadDeck = ({ user }) => {
                         <p className={styles.errors}>{errors.founder3}</p>
                     )}
                 </label>
-                <button type="submit">Upload</button>
+                <div className={styles.loading_group}>
+                    <button type="submit">Upload</button>
+                    {loading && (
+                        <CircleSpinner size={20} color="#0000FF" loading={loading} />
+                    )}
+                </div>
             </form>
         </div>
     )

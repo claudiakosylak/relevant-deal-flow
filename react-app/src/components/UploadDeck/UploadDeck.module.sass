@@ -27,18 +27,6 @@
     & > label
         display: flex
         flex-direction: column
-    & > button
-        padding: 15px
-        background-color: $blue
-        border: none
-        border-radius: 15px
-        color: white
-        font-weight: 700
-        font-size: 25px
-        width: 200px
-        align-self: center
-        +s
-            width: 100%
 
 
 .inputs
@@ -55,3 +43,21 @@
 
 .errors
     color: red
+
+.loading_group
+    display: flex
+    align-items: center
+    justify-content: center
+    gap: 30px
+    & > button
+        padding: 15px
+        background-color: $blue
+        border: none
+        border-radius: 15px
+        color: white
+        font-weight: 700
+        font-size: 25px
+        width: 200px
+        align-self: center
+        +s
+            width: 100%
