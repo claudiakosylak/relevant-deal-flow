@@ -9,16 +9,27 @@ import Home from "./components/Home";
 import MyStartups from "./components/MyStartups";
 import StartupIndex from "./components/StartupIndex";
 import UploadDeck from "./components/UploadDeck";
+import { getStartupsThunk, getUserStartupsThunk } from "./store/startup";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const user = useSelector(state => state.session.user);
+  const startups = useSelector(state => state.startup.allStartups);
+  const userStartups = useSelector(state => state.startup.myStartups);
+
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  
+  useEffect(() => {
+    dispatch(getStartupsThunk());
+    dispatch(getUserStartupsThunk());
+}, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUserStartupsThunk());
+  }, [user])
 
   return (
     <>
@@ -26,10 +37,10 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/">
-            <Home />
+            <Home startups={startups}/>
           </Route>
           <Route exact path="/my-startups">
-            <MyStartups user={user}/>
+            <Home startups={userStartups} />
           </Route>
           <Route exact path="/upload">
             <UploadDeck user={user} />

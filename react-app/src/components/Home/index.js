@@ -3,19 +3,19 @@ import styles from "./Home.module.sass";
 import { useDispatch, useSelector } from "react-redux";
 import { getStartupsThunk } from "../../store/startup";
 import FeedItem from "../FeedItem";
-import { Redirect, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect, useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
-const Home = () => {
+const Home = ({ startups }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const startups = useSelector(state => state.startup.allStartups);
+    // const startups = useSelector(state => state.startup.allStartups);
     const startupsArray = Object.values(startups);
     const user = useSelector(state => state.session.user);
+    const location = useLocation();
 
+    console.log("LOCATION: ", location)
 
-    useEffect(() => {
-        dispatch(getStartupsThunk());
-    }, [dispatch]);
+    if (!user && location.pathname==="/my-startups") return <Redirect to="/"></Redirect>
 
     const uploadClick = () => {
         if (user) {
