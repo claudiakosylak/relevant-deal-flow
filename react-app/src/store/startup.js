@@ -2,6 +2,7 @@ const GET_STARTUPS = "startup/GET_STARTUPS";
 const GET_STARTUP = "startup/GET_STARTUP";
 const GET_USER_STARTUPS = "startup/GET_USER_STARTUPS";
 const DELETE_STARTUP = "startup/DELETE_STARTUP";
+const CREATE_STARTUP = "startup/CREATE_STARTUP";
 
 const getStartups = startups => ({
     type: GET_STARTUPS,
@@ -10,6 +11,11 @@ const getStartups = startups => ({
 
 const getStartup = startup => ({
     type: GET_STARTUP,
+    startup
+})
+
+const createStartup = startup => ({
+    type: CREATE_STARTUP,
     startup
 })
 
@@ -106,6 +112,10 @@ export default function reducer(state = initialState, action) {
             const startupState = {...state, allStartups: {...state.allStartups}, myStartups: {...state.myStartups}, currentStartup: {}}
             startupState.currentStartup = action.startup;
             return startupState;
+        case CREATE_STARTUP:
+            const createState = {...state, allStartups: {...state.allStartups}, myStartups: {...state.myStartups}, currentStartup: {}}
+            createState.allStartups[action.startup.id] = action.startup;
+            createState.myStartups[action.startup.id] = action.startup;
         case GET_USER_STARTUPS:
             const newerState = {...state, allStartups: {...state.allStartups}, myStartups: {}, currentStartup: {...state.currentStartup}};
             for (let startup of action.startups.startups) {

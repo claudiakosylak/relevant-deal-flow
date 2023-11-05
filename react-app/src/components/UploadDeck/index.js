@@ -72,14 +72,14 @@ const UploadDeck = ({ user }) => {
             <h2>Upload a deck</h2>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <label>
-                    What is your startup name? (You can always change this later.)
+                    * What is your startup name? (You can always change this later.)
                     <input value={name} type="text" onChange={(e) => setName(e.target.value)} className={styles.inputs}></input>
                     {(hasSubmitted && errors.name) && (
                         <p className={styles.errors}>{errors.name}</p>
                     )}
                 </label>
                 <label>
-                    Please write a short description for your startup.
+                    * Please write a short description for your startup.
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)} className={styles.inputs}></textarea>
                     {(hasSubmitted && errors.description) && (
                         <p className={styles.errors}>{errors.description}</p>
@@ -96,7 +96,7 @@ const UploadDeck = ({ user }) => {
                     )}
                 </label>
                 <label>
-                    Please enter your company's contact email address.
+                    * Please enter your company's contact email address.
                     <input type="text" className={styles.inputs} value={email} onChange={(e) => setEmail(e.target.value)}></input>
                     {(hasSubmitted && errors.email) && (
                         <p className={styles.errors}>{errors.email}</p>
@@ -106,14 +106,14 @@ const UploadDeck = ({ user }) => {
                     )}
                 </label>
                 <label>
-                    Upload an image for your startup.
+                    * Upload an image for your startup.
                     <input type="file" onChange={(e) => setPicture(e.target.files[0])} className={styles.inputs} required accept=".jpg,.png,.jpeg,.gif,.svg,.tiff"></input>
                     {(hasSubmitted && errors.picture) && (
                         <p className={styles.errors}>{errors.picture}</p>
                     )}
                 </label>
                 <label>
-                    Upload your deck in .pdf, .ppt or .pptx format.
+                    * Upload your deck in .pdf, .ppt or .pptx format.
                     <input type="file" onChange={(e) => setDeck(e.target.files[0])} className={styles.inputs} required accept=".pdf,.ppt,.pptx"></input>
                     {(hasSubmitted && errors.deck) && (
                         <p className={styles.errors}>{errors.deck}</p>
@@ -124,7 +124,7 @@ const UploadDeck = ({ user }) => {
                     {(hasSubmitted && errors.founders) && (
                         <p className={styles.errors}>{errors.founders}</p>
                     )}
-                    <input type="text" value={founder1} placeholder="Founder 1" onChange={(e) => setFounder1(e.target.value)} className={styles.inputs}></input>
+                    <input type="text" value={founder1} placeholder="* Founder 1" onChange={(e) => setFounder1(e.target.value)} className={styles.inputs}></input>
                     {(hasSubmitted && errors.founder1) && (
                         <p className={styles.errors}>{errors.founder1}</p>
                     )}

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./Home.module.sass";
 import { useDispatch, useSelector } from "react-redux";
-import { getStartupsThunk } from "../../store/startup";
+import { getStartupsThunk, getUserStartupsThunk } from "../../store/startup";
 import FeedItem from "../FeedItem";
 import { Redirect, useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -13,7 +13,6 @@ const Home = ({ startups }) => {
     const user = useSelector(state => state.session.user);
     const location = useLocation();
 
-    if (!user && location.pathname === "/my-startups") return <Redirect to="/"></Redirect>
 
     const uploadClick = () => {
         if (user) {
@@ -23,6 +22,13 @@ const Home = ({ startups }) => {
         }
     }
 
+    useEffect(() => {
+        dispatch(getStartupsThunk());
+        dispatch(getUserStartupsThunk());
+    }, [location.pathname])
+
+    if (!user && location.pathname === "/my-startups") return <Redirect to="/"></Redirect>
+    
     return (
         <div className={styles.wrapper}>
             {location.pathname === "/my-startups" ? (
