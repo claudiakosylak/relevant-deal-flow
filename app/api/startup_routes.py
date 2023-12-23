@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from app.models import db, Startup
 from app.forms import UploadDeckForm
 from app.api.AWS_helpers import (
-    upload_file_to_s3, get_unique_filename)
+    upload_file_to_s3, get_unique_filename, remove_file_from_s3)
 
 startup_routes = Blueprint('startups', __name__)
 
@@ -24,6 +24,24 @@ def startup(id):
     startup = Startup.query.get(id)
     return startup.to_dict()
 
+@startup_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def delete_startup(id):
+    """
+    Deletes a startup by startup id.
+    """
+    startup = Startup.query.get(id)
+    image = startup.picture
+    image_removal = remove_file_from_s3(image)
+    if image_removal != True:
+        return {"error": image_removal["errors"]}, 401
+    deck = startup.deck
+    deck_removal = remove_file_from_s3(deck)
+    if deck_removal != True:
+        return {"error": deck_removal["errors"]}, 401
+    db.session.delete(startup)
+    db.session.commit()
+    return {"Success": "Startup deleted."}
 
 @startup_routes.route('/')
 def startups():
@@ -68,5 +86,4 @@ def upload_deck():
         db.session.add(startup)
         db.session.commit()
         return startup.to_dict()
-    print("🍎 form errors: ", form.errors)
     return {'errors': form.errors}, 401
