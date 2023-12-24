@@ -35,7 +35,7 @@ const StartupIndex = ({ user }) => {
                     }></img>
                 <div className={styles.right}>
                     <div className={styles.right_top}>
-                        <h2>{startup?.name}</h2>
+                        <h2>{startup?.name} {user.default_startup ? "" : <button>Add to favorites <i class="fa-regular fa-heart"></i></button>}</h2>
                         <p className={styles.website}>{startup?.website}</p>
                     </div>
                     <div className={styles.founders}>
@@ -48,6 +48,7 @@ const StartupIndex = ({ user }) => {
                             <div className={styles.founder}>{startup?.founder_3}</div>
                         )}
                     </div>
+
                     <a href={startup.deck} download={`${startup.name}_deck`} className={styles.download}>Download Deck</a>
                     <button onClick={copyToClipboard} className={styles.copy}><i class="fa-solid fa-copy"></i>Copy Link</button>
                 </div>
