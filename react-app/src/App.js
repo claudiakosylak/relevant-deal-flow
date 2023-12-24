@@ -10,6 +10,7 @@ import MyStartups from "./components/MyStartups";
 import StartupIndex from "./components/StartupIndex";
 import UploadDeck from "./components/UploadDeck";
 import { getStartupsThunk, getUserStartupsThunk } from "./store/startup";
+import AddSecondAccount from "./components/AddSecondAccount";
 
 function App() {
   const dispatch = useDispatch();
@@ -53,6 +54,9 @@ function App() {
           </Route>
           <Route exact path="/investor-signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path="/add-investor-account">
+            <AddSecondAccount />
           </Route>
           <Route path="/:id">
             <StartupIndex user={user}/>
