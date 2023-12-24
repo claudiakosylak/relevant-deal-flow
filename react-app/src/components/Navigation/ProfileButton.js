@@ -84,22 +84,33 @@ function ProfileButton({ user }) {
             <NavLink to="/" className={styles.my_startups} onClick={closeMenu}>
               Feed
             </NavLink>
-            <NavLink
-              to="/upload"
-              className={styles.my_startups}
-              onClick={closeMenu}
-            >
-              Upload a Deck
-            </NavLink>
-            <NavLink
-              to="/my-startups"
-              className={styles.my_startups}
-              onClick={closeMenu}
-            >
-              My Startups
-            </NavLink>
+            {user.default_startup && (
+              <>
+                <NavLink
+                  to="/upload"
+                  className={styles.my_startups}
+                  onClick={closeMenu}
+                >
+                  Upload a Deck
+                </NavLink>
+                <NavLink
+                  to="/my-startups"
+                  className={styles.my_startups}
+                  onClick={closeMenu}
+                >
+                  My Startups
+                </NavLink>
+              </>
+            )}
             <li className={styles.name}>
               Logged in as {user.default_startup ? "Startup" : "Investor"}
+              <br></br>
+              {!user.default_startup && (
+                <>
+                <br></br>
+                {user.investor_company}
+                </>
+              )}
               <br></br>
               {user.email}
             </li>
