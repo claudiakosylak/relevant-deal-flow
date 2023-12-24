@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, session, request
 from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
+from app.forms import SignUpFormInvestor
 from flask_login import current_user, login_user, logout_user, login_required
 
 auth_routes = Blueprint('auth', __name__)
@@ -54,17 +55,38 @@ def logout():
     return {'message': 'User logged out'}
 
 
-@auth_routes.route('/signup', methods=['POST'])
+@auth_routes.route('/signup-as-startup', methods=['POST'])
 def sign_up():
     """
-    Creates a new user and logs them in
+    Creates a new user as startup and logs them in
     """
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         user = User(
             email=form.data['email'],
-            password=form.data['password']
+            password=form.data['password'],
+            is_startup=True
+        )
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        return user.to_dict()
+    return form.errors, 401
+
+@auth_routes.route('/signup-as-investor', methods=['POST'])
+def sign_up_investor():
+    """
+    Creates a new user as investor and logs them in
+    """
+    form = SignUpFormInvestor()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        user = User(
+            email=form.data['email'],
+            password=form.data['password'],
+            is_investor=True,
+            investor_company=form.data['investor_company']
         )
         db.session.add(user)
         db.session.commit()

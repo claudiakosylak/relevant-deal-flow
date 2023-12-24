@@ -68,7 +68,7 @@ export const logout = () => async (dispatch) => {
 };
 
 export const signUp = (email, password) => async (dispatch) => {
-	const response = await fetch("/api/auth/signup", {
+	const response = await fetch("/api/auth/signup-as-startup", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -76,6 +76,32 @@ export const signUp = (email, password) => async (dispatch) => {
 		body: JSON.stringify({
 			email,
 			password,
+		}),
+	});
+
+	if (response.ok) {
+		const data = await response.json();
+		dispatch(setUser(data));
+		return null;
+	} else if (response.status < 500) {
+		const data = await response.json();
+		return data;
+	} else {
+		return ["An error occurred. Please try again."];
+	}
+};
+
+
+export const signUpInvestor = (email, password, investor_company) => async (dispatch) => {
+	const response = await fetch("/api/auth/signup-as-investor", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			email,
+			password,
+			investor_company
 		}),
 	});
 

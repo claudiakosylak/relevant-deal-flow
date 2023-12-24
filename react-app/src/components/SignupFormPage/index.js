@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { signUp } from "../../store/session";
-import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { signUp, signUpInvestor } from "../../store/session";
+import {
+  useHistory,
+  useLocation,
+} from "react-router-dom/cjs/react-router-dom.min";
 import styles from "./SignupFormPage.module.sass";
 
 function SignupFormPage() {
@@ -12,23 +15,31 @@ function SignupFormPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [investorCompany, setInvestorCompany] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   if (sessionUser && !history.location.state) {
     return <Redirect to="/" />;
   } else if (sessionUser && history.location.state.from === "upload") {
-    return <Redirect to="/upload" />
+    return <Redirect to="/upload" />;
   }
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      const data = await dispatch(signUp(email, password));
-      if (data) {
-        setErrors(data)
+      if (location.pathname === "/signup") {
+        const data = await dispatch(signUp(email, password));
+        if (data) {
+          setErrors(data);
+        }
+      } else {
+        const data = await dispatch(
+          signUpInvestor(email, password, investorCompany)
+        );
+        if (data) {
+          setErrors(data);
+        }
       }
     } else {
       setErrors({ match: "Passwords do not match." });
@@ -37,7 +48,12 @@ function SignupFormPage() {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Sign Up {location.pathname === "/investor-signup" ? "as Investor" : "as Startup"}</h1>
+      <h1>
+        Sign Up{" "}
+        {location.pathname === "/investor-signup"
+          ? "as Investor"
+          : "as Startup"}
+      </h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label>
           Email
@@ -48,10 +64,23 @@ function SignupFormPage() {
             required
             className={styles.inputs}
           />
-          {errors.email && (
-            <p className={styles.errors}>{errors.email[0]}</p>
-          )}
+          {errors.email && <p className={styles.errors}>{errors.email[0]}</p>}
         </label>
+        {location.pathname === "/investor-signup" && (
+          <label>
+            Company Name
+            <input
+              type="text"
+              value={investorCompany}
+              onChange={(e) => setInvestorCompany(e.target.value)}
+              required
+              className={styles.inputs}
+            />
+            {errors.investor_company && (
+              <p className={styles.errors}>{errors.investor_company[0]}</p>
+            )}
+          </label>
+        )}
         <label>
           Password
           <input
@@ -71,24 +100,27 @@ function SignupFormPage() {
             required
             className={styles.inputs}
           />
-          {errors.match && (
-            <p className={styles.errors}>{errors.match}</p>
-          )}
-          {errors.password && (
+          {errors.match && <p className={styles.errors}>{errors.match}</p>}
+          {errors.password &&
             errors.password.map((error, index) => (
-              <p className={styles.errors} key={index}>{error}</p>
-            ))
-          )}
+              <p className={styles.errors} key={index}>
+                {error}
+              </p>
+            ))}
         </label>
         <button type="submit">Sign Up</button>
-        <p className={styles.login} onClick={() => {
-          if (history.location.state) {
-            history.push("/login", { from: history.location.state.from })
-          } else {
-            history.push("/login");
-          }
-        }
-        }>Already have an account?</p>
+        <p
+          className={styles.login}
+          onClick={() => {
+            if (history.location.state) {
+              history.push("/login", { from: history.location.state.from });
+            } else {
+              history.push("/login");
+            }
+          }}
+        >
+          Already have an account?
+        </p>
       </form>
     </div>
   );
