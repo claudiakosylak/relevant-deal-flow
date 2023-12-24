@@ -67,7 +67,8 @@ def sign_up():
         user = User(
             email=form.data['email'],
             password=form.data['password'],
-            is_startup=True
+            is_startup=True,
+            default_startup=True
         )
         db.session.add(user)
         db.session.commit()
@@ -87,7 +88,8 @@ def sign_up_investor():
             email=form.data['email'],
             password=form.data['password'],
             is_investor=True,
-            investor_company=form.data['investor_company']
+            investor_company=form.data['investor_company'],
+            default_startup=False
         )
         db.session.add(user)
         db.session.commit()
@@ -107,6 +109,7 @@ def add_investor_account():
         user = User.query.get(current_user.id)
         user.is_investor = True
         user.investor_company = form.data['company']
+        user.default_startup = False
         db.session.commit()
         return user.to_dict()
     return form.errors, 401

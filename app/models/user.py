@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     is_investor = db.Column(db.Boolean, default=False)
     is_startup = db.Column(db.Boolean, default=False)
     investor_company = db.Column(db.String(100))
+    default_startup = db.Column(db.Boolean)
 
     startups = db.relationship("Startup", back_populates="user", cascade="all, delete-orphan")
 
@@ -35,5 +36,6 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'is_investor': self.is_investor,
             'is_startup': self.is_startup,
-            'investor_company': self.investor_company
+            'investor_company': self.investor_company,
+            'default_startup': self.default_startup
         }

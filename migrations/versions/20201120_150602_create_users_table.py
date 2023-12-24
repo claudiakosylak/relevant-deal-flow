@@ -29,6 +29,7 @@ def upgrade():
     sa.Column('is_investor', sa.Boolean()),
     sa.Column('is_startup', sa.Boolean()),
     sa.Column('investor_company', sa.String(length=100)),
+    sa.Column('default_startup', sa.Boolean()),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
