@@ -114,6 +114,17 @@ def add_investor_account():
         return user.to_dict()
     return form.errors, 401
 
+@auth_routes.route('/switch-account', methods=['PUT'])
+@login_required
+def switch_account():
+    """
+    Switches user between startup and investor account as default
+    """
+    user = User.query.get(current_user.id)
+    user.default_startup = not user.default_startup
+    db.session.commit()
+    return user.to_dict()
+
 
 
 @auth_routes.route('/unauthorized')

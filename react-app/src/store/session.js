@@ -87,6 +87,22 @@ export const addInvestorAccount = (company) => async (dispatch) => {
   }
 };
 
+export const switchAccountThunk = () => async (dispatch) => {
+  const response = await fetch("/api/auth/switch-account", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(setUser(data))
+    return null;
+  } else {
+    return ["An error occurred. Please try again."]
+  }
+};
+
 export const signUp = (email, password) => async (dispatch) => {
   const response = await fetch("/api/auth/signup-as-startup", {
     method: "POST",

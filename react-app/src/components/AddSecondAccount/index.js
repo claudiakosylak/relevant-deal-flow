@@ -10,7 +10,7 @@ function AddSecondAccount() {
   const [company, setCompany] = useState("");
   const [errors, setErrors] = useState({});
 
-  if (!user || (user.is_startup && user.is_investor)) {
+  if (!user || user.is_investor) {
     return <Redirect to="/" />;
   }
 
