@@ -28,7 +28,7 @@ const Home = ({ startups }) => {
     }, [location.pathname])
 
     if (!user && location.pathname === "/my-startups") return <Redirect to="/"></Redirect>
-    
+
     return (
         <div className={styles.wrapper}>
             {location.pathname === "/my-startups" ? (
@@ -46,7 +46,7 @@ const Home = ({ startups }) => {
             </div>
             <div className={styles.feed}>
                 {startupsArray?.map(startup => (
-                    <FeedItem key={startup.id} startup={startup} />
+                    <FeedItem key={startup.id} startup={startup} user={user}/>
                 ))}
             </div>
         </div>

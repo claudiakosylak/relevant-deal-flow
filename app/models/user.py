@@ -13,6 +13,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     is_investor = db.Column(db.Boolean, default=False)
+    is_startup = db.Column(db.Boolean, default=False)
+    investor_company = db.Column(db.String(100))
 
     startups = db.relationship("Startup", back_populates="user", cascade="all, delete-orphan")
 
@@ -31,5 +33,7 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'email': self.email,
-            'is_investor': self.is_investor
+            'is_investor': self.is_investor,
+            'is_startup': self.is_startup,
+            'investor_company': self.investor_company
         }

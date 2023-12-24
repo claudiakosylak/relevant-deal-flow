@@ -2,8 +2,15 @@ import React from "react";
 import styles from "./FeedItem.module.sass";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-const FeedItem = ({ startup }) => {
+const FeedItem = ({ startup, user }) => {
     const history = useHistory();
+
+    // const handleFavorite = () => {
+    //     if (user || user.is_investor === false) {
+
+    //     }
+    // }
+
     return (
         <div className={styles.wrapper}>
             <img src={startup.picture} className={styles.deck}
@@ -12,7 +19,7 @@ const FeedItem = ({ startup }) => {
             ></img>
             <div className={styles.right}>
                 <div className={styles.right_top}>
-                    <h3>{startup.name}</h3>
+                    <h3>{startup.name} <i className={`fa-regular fa-heart ${styles.favorite}`}></i></h3>
                     <p>{startup.description}</p>
                 </div>
                 <button className={styles.button} onClick={() => history.push(`/${startup.id}`)}>View</button>

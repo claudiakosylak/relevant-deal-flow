@@ -27,6 +27,8 @@ def upgrade():
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('hashed_password', sa.String(length=255), nullable=False),
     sa.Column('is_investor', sa.Boolean()),
+    sa.Column('is_startup', sa.Boolean()),
+    sa.Column('investor_company', sa.String(length=100)),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )

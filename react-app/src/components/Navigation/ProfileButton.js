@@ -89,7 +89,8 @@ function ProfileButton({ user }) {
             }}
             >Upload a Deck</li>
             <NavLink to="/login" className={styles.login} onClick={closeMenu}>Login</NavLink>
-            <NavLink to="/signup" className={styles.login} onClick={closeMenu}>Sign Up</NavLink>
+            <NavLink to="/signup" className={styles.login} onClick={closeMenu}>Sign Up as Startup</NavLink>
+            <NavLink to="/investor-signup" className={styles.login} onClick={closeMenu}>Sign Up as Investor</NavLink>
           </>
         )}
       </ul>

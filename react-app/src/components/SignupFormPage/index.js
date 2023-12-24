@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/session";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import styles from "./SignupFormPage.module.sass";
 
 function SignupFormPage() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +37,7 @@ function SignupFormPage() {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Sign Up</h1>
+      <h1>Sign Up {location.pathname === "/investor-signup" ? "as Investor" : "as Startup"}</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label>
           Email

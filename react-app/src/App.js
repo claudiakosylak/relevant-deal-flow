@@ -51,6 +51,9 @@ function App() {
           <Route exact path="/signup">
             <SignupFormPage />
           </Route>
+          <Route exact path="/investor-signup">
+            <SignupFormPage />
+          </Route>
           <Route path="/:id">
             <StartupIndex user={user}/>
           </Route>
