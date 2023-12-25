@@ -8,6 +8,7 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom/cjs/react-router-dom.min";
+import { userFavoritesThunk } from "../../store/favorite";
 
 const Home = ({ startups }) => {
   const dispatch = useDispatch();
@@ -15,7 +16,10 @@ const Home = ({ startups }) => {
   // const startups = useSelector(state => state.startup.allStartups);
   const startupsArray = Object.values(startups);
   const user = useSelector((state) => state.session.user);
+  const favorites = useSelector((state) => state.favorite.favorites);
   const location = useLocation();
+
+  console.log("FAVORITES: ", favorites)
 
   const uploadClick = () => {
     if (user) {
@@ -27,7 +31,10 @@ const Home = ({ startups }) => {
 
   useEffect(() => {
     dispatch(getStartupsThunk());
-    dispatch(getUserStartupsThunk());
+    if (user) {
+      dispatch(getUserStartupsThunk());
+      dispatch(userFavoritesThunk());
+    }
   }, [location.pathname]);
 
   if ((!user || !user.default_startup) && location.pathname === "/my-startups")
@@ -40,7 +47,7 @@ const Home = ({ startups }) => {
       ) : (
         <div className={styles.intro}>Startup Feed</div>
       )}
-      {(user && user.default_startup) && (
+      {user && user.default_startup && (
         <div className={styles.upload} onClick={uploadClick}>
           <i class="fa-solid fa-circle-arrow-up"></i>
           <p>Upload Deck</p>
@@ -48,7 +55,7 @@ const Home = ({ startups }) => {
       )}
       <div className={styles.feed}>
         {startupsArray?.map((startup) => (
-          <FeedItem key={startup.id} startup={startup} user={user} />
+          <FeedItem key={startup.id} startup={startup} user={user} favorites={favorites}/>
         ))}
       </div>
     </div>

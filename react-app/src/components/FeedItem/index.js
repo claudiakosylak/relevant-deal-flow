@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./FeedItem.module.sass";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch } from "react-redux";
+import { favoriteThunk } from "../../store/favorite";
 
-const FeedItem = ({ startup, user }) => {
+const FeedItem = ({ startup, user, favorites }) => {
+  const [isFavorite, setIsFavorite] = useState(
+    favorites[startup.id] ? true : false
+  );
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  // const handleFavorite = () => {
-  //     if (user || user.is_investor === false) {
-
-  //     }
-  // }
+  const handleFavorite = () => {
+    if (!user) {
+      history.push("/login");
+    } else if (isFavorite === false) {
+      dispatch(favoriteThunk(startup.id));
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -26,10 +37,12 @@ const FeedItem = ({ startup, user }) => {
         <div className={styles.right_top}>
           <h3>
             {startup.name}{" "}
-            {(user && user.default_startup) ? (
+            {user && user.default_startup ? (
               ""
+            ) : user && isFavorite ? (
+              <i className={`fa-solid fa-heart ${styles.favorite}`}></i>
             ) : (
-              <i className={`fa-regular fa-heart ${styles.favorite}`}></i>
+              <i className={`fa-regular fa-heart ${styles.favorite}`} onClick={handleFavorite}></i>
             )}
           </h3>
           <p>{startup.description}</p>

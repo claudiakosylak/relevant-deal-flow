@@ -25,11 +25,15 @@ function App() {
 
   useEffect(() => {
     dispatch(getStartupsThunk());
-    dispatch(getUserStartupsThunk());
+    if (user) {
+      dispatch(getUserStartupsThunk());
+    }
 }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getUserStartupsThunk());
+    if (user) {
+      dispatch(getUserStartupsThunk());
+    }
   }, [user])
 
   return (

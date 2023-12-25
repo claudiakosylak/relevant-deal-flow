@@ -24,10 +24,12 @@ def get_favorites():
     """
     Get a list of all startups favorited by current user
     """
+
     favorites = Favorite.query.filter(Favorite.user_id == current_user.id).all()
     result = []
     for favorite in favorites:
-        startup = Startup.query.filter(Startup.id == favorite.startup_id).to_dict()
-        startup['date_favorited'] = favorite.created_at
-        result.append(startup)
+        startup = Startup.query.filter(Startup.id == favorite.startup_id).first()
+        startup_dict = startup.to_dict()
+        startup_dict['date_favorited'] = favorite.created_at
+        result.append(startup_dict)
     return {'startups': result}

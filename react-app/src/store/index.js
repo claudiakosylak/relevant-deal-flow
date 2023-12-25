@@ -2,10 +2,12 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import session from './session';
 import startup from './startup';
+import favorite from './favorite';
 
 const rootReducer = combineReducers({
   session,
-  startup
+  startup,
+  favorite
 });
 
 
