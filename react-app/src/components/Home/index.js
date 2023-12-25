@@ -40,7 +40,7 @@ const Home = ({ startups }) => {
       ) : (
         <div className={styles.intro}>Startup Feed</div>
       )}
-      {user.default_startup && (
+      {(user && user.default_startup) && (
         <div className={styles.upload} onClick={uploadClick}>
           <i class="fa-solid fa-circle-arrow-up"></i>
           <p>Upload Deck</p>

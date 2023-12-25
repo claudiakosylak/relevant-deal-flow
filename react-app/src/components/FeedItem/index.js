@@ -26,7 +26,7 @@ const FeedItem = ({ startup, user }) => {
         <div className={styles.right_top}>
           <h3>
             {startup.name}{" "}
-            {user.default_startup ? (
+            {(user && user.default_startup) ? (
               ""
             ) : (
               <i className={`fa-regular fa-heart ${styles.favorite}`}></i>
