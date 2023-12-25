@@ -11,6 +11,7 @@ import StartupIndex from "./components/StartupIndex";
 import UploadDeck from "./components/UploadDeck";
 import { getStartupsThunk, getUserStartupsThunk } from "./store/startup";
 import AddSecondAccount from "./components/AddSecondAccount";
+import { userFavoritesThunk } from "./store/favorite";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
     dispatch(getStartupsThunk());
     if (user) {
       dispatch(getUserStartupsThunk());
+      dispatch(userFavoritesThunk());
     }
 }, [dispatch]);
 
