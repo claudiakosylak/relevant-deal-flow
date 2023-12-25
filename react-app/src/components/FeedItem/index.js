@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./FeedItem.module.sass";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
 import { favoriteThunk } from "../../store/favorite";
 
 const FeedItem = ({ startup, user, favorites }) => {
-  const [isFavorite, setIsFavorite] = useState(
-    favorites[startup.id] ? true : false
-  );
+    console.log("FAVORITES IN?: ", favorites[startup.id])
+  const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -21,6 +20,12 @@ const FeedItem = ({ startup, user, favorites }) => {
       setIsFavorite(false);
     }
   };
+
+  useEffect(() => {
+    if (favorites[startup.id]) {
+        setIsFavorite(true)
+    }
+  }, [favorites])
 
   return (
     <div className={styles.wrapper}>
