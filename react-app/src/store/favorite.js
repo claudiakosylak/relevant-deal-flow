@@ -22,11 +22,23 @@ export const userFavoritesThunk = () => async (dispatch) => {
   const response = await fetch("/api/favorites/");
   if (response.ok) {
     const data = await response.json();
-    console.log("DATA: ", data)
+    console.log("DATA: ", data);
     dispatch(getFavorites(data));
     return data;
   } else {
     return ["An error occurred. Please try again"];
+  }
+};
+
+export const deleteFavoriteThunk = (startupId) => async (dispatch) => {
+  const response = await fetch(`/api/favorites/${startupId}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    return ["An error occurred. Please try again."];
   }
 };
 

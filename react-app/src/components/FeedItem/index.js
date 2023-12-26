@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import styles from "./FeedItem.module.sass";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
-import { favoriteThunk } from "../../store/favorite";
+import { deleteFavoriteThunk, favoriteThunk } from "../../store/favorite";
 
 const FeedItem = ({ startup, user, favorites }) => {
-    console.log("FAVORITES IN?: ", favorites[startup.id])
   const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -20,6 +19,11 @@ const FeedItem = ({ startup, user, favorites }) => {
       setIsFavorite(false);
     }
   };
+
+  const handleUnfavorite = () => {
+    dispatch(deleteFavoriteThunk(startup.id))
+    setIsFavorite(false)
+  }
 
   useEffect(() => {
     if (favorites[startup.id]) {
@@ -45,7 +49,7 @@ const FeedItem = ({ startup, user, favorites }) => {
             {user && user.default_startup ? (
               ""
             ) : user && isFavorite ? (
-              <i className={`fa-solid fa-heart ${styles.favorite}`}></i>
+              <i className={`fa-solid fa-heart ${styles.favorite}`} onClick={handleUnfavorite}></i>
             ) : (
               <i className={`fa-regular fa-heart ${styles.favorite}`} onClick={handleFavorite}></i>
             )}
