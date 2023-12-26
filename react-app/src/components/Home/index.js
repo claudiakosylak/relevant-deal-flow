@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStartupsThunk, getUserStartupsThunk } from "../../store/startup";
 import FeedItem from "../FeedItem";
 import {
+    NavLink,
   Redirect,
   useHistory,
   useLocation,
@@ -35,7 +36,12 @@ const Home = ({ startups }) => {
     }
   }, [location.pathname]);
 
-  if ((!user || !user.default_startup) && location.pathname === "/my-startups")
+  if (
+    ((!user || !user.default_startup) &&
+      location.pathname === "/my-startups") ||
+    !user ||
+    (user.default_startup && location.pathname === "/favorites")
+  )
     return <Redirect to="/"></Redirect>;
 
   return (
@@ -44,9 +50,14 @@ const Home = ({ startups }) => {
         <div className={styles.intro}>My Startups</div>
       ) : location.pathname === "/favorites" ? (
         <div className={styles.intro}>My Favorites</div>
-      ) :
-      (
+      ) : (
         <div className={styles.intro}>Startup Feed</div>
+      )}
+      {user && location.pathname === "/my-startups" && startupsArray.length === 0 && (
+        <div className={styles.empty}>
+            <br></br>
+            You haven't registered a startup yet.
+            </div>
       )}
       {user && user.default_startup && (
         <div className={styles.upload} onClick={uploadClick}>
@@ -56,8 +67,19 @@ const Home = ({ startups }) => {
       )}
       <div className={styles.feed}>
         {startupsArray?.map((startup) => (
-          <FeedItem key={startup.id} startup={startup} user={user} favorites={favorites}/>
+          <FeedItem
+            key={startup.id}
+            startup={startup}
+            user={user}
+            favorites={favorites}
+          />
         ))}
+        {(user && location.pathname === "/favorites" && startupsArray.length === 0) && (
+            <div className={styles.empty}>
+                You haven't added any startups to your favorites yet. <br></br><br></br>
+                <NavLink to="/" className={styles.browse}>Browse startups</NavLink>
+            </div>
+        )}
       </div>
     </div>
   );
