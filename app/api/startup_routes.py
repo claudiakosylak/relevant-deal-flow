@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, Startup
+from app.models import db, Startup, Favorite
 from app.forms import UploadDeckForm
 from app.api.AWS_helpers import (
     upload_file_to_s3, get_unique_filename, remove_file_from_s3)
@@ -22,7 +22,14 @@ def startup(id):
     Query for a specific startup by startup id in a dictionary
     """
     startup = Startup.query.get(id)
-    return startup.to_dict()
+    startup_dict = startup.to_dict()
+    if current_user:
+        favorited = Favorite.query.filter(Favorite.startup_id == id and Favorite.user_id == current_user.id).first()
+        if favorited:
+            startup_dict["favorited"] = True
+        else:
+            startup_dict["favorited"] = False
+    return startup_dict
 
 @startup_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
