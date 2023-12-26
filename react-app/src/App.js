@@ -19,6 +19,7 @@ function App() {
   const user = useSelector(state => state.session.user);
   const startups = useSelector(state => state.startup.allStartups);
   const userStartups = useSelector(state => state.startup.myStartups);
+  const favoriteStartups = useSelector(state => state.favorite.favorites);
 
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
@@ -48,6 +49,9 @@ function App() {
           </Route>
           <Route exact path="/my-startups">
             <Home startups={userStartups} />
+          </Route>
+          <Route exact path="/favorites">
+            <Home startups={favoriteStartups} />
           </Route>
           <Route exact path="/upload">
             <UploadDeck user={user} />

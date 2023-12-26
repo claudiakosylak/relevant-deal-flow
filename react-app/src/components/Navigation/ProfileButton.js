@@ -84,6 +84,9 @@ function ProfileButton({ user }) {
             <NavLink to="/" className={styles.my_startups} onClick={closeMenu}>
               Feed
             </NavLink>
+            {!user.default_startup && (
+              <NavLink to="/favorites" className={styles.my_startups} onClick={closeMenu}>My Favorites</NavLink>
+            )}
             {user.default_startup && (
               <>
                 <NavLink

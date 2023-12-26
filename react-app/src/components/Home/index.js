@@ -19,8 +19,6 @@ const Home = ({ startups }) => {
   const favorites = useSelector((state) => state.favorite.favorites);
   const location = useLocation();
 
-  console.log("FAVORITES: ", favorites)
-
   const uploadClick = () => {
     if (user) {
       history.push("/upload");
@@ -44,7 +42,10 @@ const Home = ({ startups }) => {
     <div className={styles.wrapper}>
       {location.pathname === "/my-startups" ? (
         <div className={styles.intro}>My Startups</div>
-      ) : (
+      ) : location.pathname === "/favorites" ? (
+        <div className={styles.intro}>My Favorites</div>
+      ) :
+      (
         <div className={styles.intro}>Startup Feed</div>
       )}
       {user && user.default_startup && (
