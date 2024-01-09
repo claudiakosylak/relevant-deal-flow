@@ -11,6 +11,7 @@ import UploadDeck from "./components/UploadDeck";
 import { getStartupsThunk, getUserStartupsThunk } from "./store/startup";
 import AddSecondAccount from "./components/AddSecondAccount";
 import { userFavoritesThunk } from "./store/favorite";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +73,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Footer />
     </>
   );
 }
