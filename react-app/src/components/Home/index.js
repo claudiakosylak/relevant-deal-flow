@@ -20,6 +20,9 @@ const Home = ({ startups }) => {
   const favorites = useSelector((state) => state.favorite.favorites);
   const location = useLocation();
 
+  console.log("USER: ", user)
+  console.log("STARTUPS: ", startupsArray)
+
   const uploadClick = () => {
     if (user) {
       history.push("/upload");
@@ -39,8 +42,7 @@ const Home = ({ startups }) => {
   if (
     ((!user || !user.default_startup) &&
       location.pathname === "/my-startups") ||
-    !user ||
-    (user.default_startup && location.pathname === "/favorites")
+    ((!user || user.default_startup) && location.pathname === "/favorites")
   )
     return <Redirect to="/"></Redirect>;
 
@@ -53,6 +55,7 @@ const Home = ({ startups }) => {
       ) : (
         <div className={styles.intro}>Startup Feed</div>
       )}
+
       {user && location.pathname === "/my-startups" && startupsArray.length === 0 && (
         <div className={styles.empty}>
             <br></br>

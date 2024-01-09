@@ -6,7 +6,6 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
-import MyStartups from "./components/MyStartups";
 import StartupIndex from "./components/StartupIndex";
 import UploadDeck from "./components/UploadDeck";
 import { getStartupsThunk, getUserStartupsThunk } from "./store/startup";
