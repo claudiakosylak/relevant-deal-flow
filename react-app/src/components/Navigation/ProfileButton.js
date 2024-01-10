@@ -4,6 +4,7 @@ import { logout, switchAccountThunk } from "../../store/session";
 import { NavLink } from "react-router-dom";
 import styles from "./ProfileButton.module.sass";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import useScrollBlock from "../../useScrollBlock";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -12,11 +13,13 @@ function ProfileButton({ user }) {
   const [isMobile, setIsMobile] = useState(
     window.innerWidth <= 474 ? true : false
   );
+  const [blockScroll, allowScroll] = useScrollBlock();
   const ulRef = useRef();
 
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
+    blockScroll();
   };
 
   useEffect(() => {
@@ -37,6 +40,7 @@ function ProfileButton({ user }) {
     const closeMenu = (e) => {
       if (ulRef.current && !ulRef.current.contains(e.target)) {
         setShowMenu(false);
+        allowScroll();
       }
     };
 
