@@ -113,16 +113,14 @@ function ProfileButton({ user }) {
               </>
             )}
             <li className={styles.name}>
-              Logged in as {user.default_startup ? "Startup" : "Investor"}
-              <br></br>
+              <p>Logged in as {user.default_startup ? "Startup" : "Investor"}</p>
               {!user.default_startup && (
                 <>
                 <br></br>
-                {user.investor_company}
+                <p>{user.investor_company}</p>
                 </>
               )}
-              <br></br>
-              {user.email}
+              <p>{user.email}</p>
             </li>
             <li className={styles.my_startups} onClick={switchAccount}>
               {!user.default_startup ? "Startup Account" : "Investor Account"}
