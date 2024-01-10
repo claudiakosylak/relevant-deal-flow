@@ -70,15 +70,24 @@
         word-break: break-word
         text-overflow: ellipsis
         display: flex
+        width: 100%
+        align-items: center
         justify-content: space-between
         +m
             font-size: 25px
+        +a
+            justify-content: center
+            position: relative
+            margin-bottom: 20px
     +a
         align-items: center
 
 .favorite
     font-size: 30px
     cursor: pointer
+    +a
+        position: absolute
+        right: 0
 
 .button
     border: 1px solid $dark
