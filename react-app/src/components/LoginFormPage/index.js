@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { login } from "../../store/session";
+import { login, switchAccountThunk } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -13,10 +13,31 @@ function LoginFormPage() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
 
-  if (sessionUser && !history.location.state) {
+  if (
+    sessionUser &&
+    (!history.location.state ||
+      (sessionUser.is_investor &&
+        !sessionUser.default_startup &&
+        history.location.state.from === "favorite"))
+  ) {
     return <Redirect to="/" />;
   } else if (sessionUser && history.location.state.from === "upload") {
-    return <Redirect to="/upload" />
+    return <Redirect to="/upload" />;
+  } else if (
+    sessionUser &&
+    !sessionUser.is_investor &&
+    sessionUser.default_startup &&
+    history.location.state.from === "favorite"
+  ) {
+    history.push("/add-investor-account");
+  } else if (
+    sessionUser &&
+    sessionUser.is_investor &&
+    sessionUser.default_startup &&
+    history.location.state.from === "favorite"
+  ) {
+    dispatch(switchAccountThunk());
+    history.push("/");
   }
 
   const handleSubmit = async (e) => {
@@ -24,10 +45,10 @@ function LoginFormPage() {
     const data = await dispatch(login(email, password));
     if (data) {
       if (data.email) {
-        setErrors(data.email[0])
+        setErrors(data.email[0]);
       }
       if (data.password) {
-        setErrors(data.password[0])
+        setErrors(data.password[0]);
       }
     }
   };
@@ -36,9 +57,7 @@ function LoginFormPage() {
     <div className={styles.wrapper}>
       <h2>Log In</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
-      {errors && (
-            <p className={styles.errors}>{errors}</p>
-          )}
+        {errors && <p className={styles.errors}>{errors}</p>}
 
         <label>
           Email
@@ -59,17 +78,20 @@ function LoginFormPage() {
             required
             className={styles.inputs}
           />
-
         </label>
         <button type="submit">Log In</button>
-        <p className={styles.signup} onClick={() => {
-          if (history.location.state) {
-            history.push("/signup", { from: history.location.state.from })
-          } else {
-            history.push("/signup");
-          }
-        }
-        }>Don't have an account yet?</p>
+        <p
+          className={styles.signup}
+          onClick={() => {
+            if (history.location.state) {
+              history.push("/signup", { from: history.location.state.from });
+            } else {
+              history.push("/signup");
+            }
+          }}
+        >
+          Don't have an account yet?
+        </p>
       </form>
     </div>
   );

@@ -11,7 +11,7 @@ const FeedItem = ({ startup, user, favorites }) => {
 
   const handleFavorite = () => {
     if (!user) {
-      history.push("/login");
+      history.push("/login", {from: "favorite"});
     } else if (isFavorite === false) {
       dispatch(favoriteThunk(startup.id));
       setIsFavorite(true);
