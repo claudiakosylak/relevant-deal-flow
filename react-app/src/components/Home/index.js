@@ -20,9 +20,6 @@ const Home = ({ startups }) => {
   const favorites = useSelector((state) => state.favorite.favorites);
   const location = useLocation();
 
-  console.log("USER: ", user)
-  console.log("STARTUPS: ", startupsArray)
-
   const uploadClick = () => {
     if (user) {
       history.push("/upload");
@@ -62,7 +59,7 @@ const Home = ({ startups }) => {
             You haven't registered a startup yet.
             </div>
       )}
-      {user && user.default_startup && (
+      {(!user || (user && user.default_startup)) && (
         <div className={styles.upload} onClick={uploadClick}>
           <i class="fa-solid fa-circle-arrow-up"></i>
           <p>Upload Deck</p>
