@@ -65,7 +65,10 @@ function ProfileButton({ user }) {
 
   const ulClassName = showMenu ? styles.profile_dropdown : styles.hidden;
   const darkBackground = showMenu ? styles.dark : styles.hidden;
-  const closeMenu = () => setShowMenu(false);
+  const closeMenu = () => {
+    setShowMenu(false)
+    allowScroll();
+  };
 
   return (
     <>
