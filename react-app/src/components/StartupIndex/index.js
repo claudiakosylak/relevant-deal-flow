@@ -23,7 +23,7 @@ const StartupIndex = ({ user }) => {
       dispatch(favoriteThunk(id));
       setIsFavorite(true);
     } else {
-      history.push("/login");
+      history.push("/login", {from: "favorite"});
     }
   };
 
