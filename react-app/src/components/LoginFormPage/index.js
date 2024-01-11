@@ -29,7 +29,7 @@ function LoginFormPage() {
     sessionUser.default_startup &&
     history.location.state.from === "favorite"
   ) {
-    return <Redirect to="/add-investor-account"/>
+    return <Redirect to="/add-investor-account" />;
     // history.push("/add-investor-account");
   } else if (
     sessionUser &&
@@ -84,8 +84,12 @@ function LoginFormPage() {
         <p
           className={styles.signup}
           onClick={() => {
-            if (history.location.state) {
+            if (history.location.state.from === "upload") {
               history.push("/signup", { from: history.location.state.from });
+            } else if (history.location.state.from === "favorite") {
+              history.push("/investor-signup", {
+                from: history.location.state.from,
+              });
             } else {
               history.push("/signup");
             }
