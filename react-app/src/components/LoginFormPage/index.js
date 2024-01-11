@@ -29,7 +29,8 @@ function LoginFormPage() {
     sessionUser.default_startup &&
     history.location.state.from === "favorite"
   ) {
-    history.push("/add-investor-account");
+    return <Redirect to="/add-investor-account"/>
+    // history.push("/add-investor-account");
   } else if (
     sessionUser &&
     sessionUser.is_investor &&
